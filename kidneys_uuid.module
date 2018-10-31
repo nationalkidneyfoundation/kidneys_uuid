@@ -1,0 +1,30 @@
+<?php
+// commerce_recurring
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function kidneys_uuid_entity_info_alter(&$entity_info) {
+  if (isset($entity_info['commerce_recurring'])) {
+    $entity_info['commerce_recurring']['uuid'] = TRUE;
+    $entity_info['commerce_recurring']['entity keys']['uuid'] = 'uuid';
+  }
+}
+
+/**
+ * Implements hook_entity_uuid_load().
+ */
+function kidneys_uuid_entity_uuid_load(&$entities, $entity_type) {
+  if ($entity_type == 'commerce_recurring') {
+    entity_property_id_to_uuid($entities, 'commerce_recurring', 'id');
+  }
+}
+
+/**
+ * Implements hook_entity_uuid_presave().
+ */
+function kidneys_uuid_entity_uuid_presave(&$entity, $entity_type) {
+  if ($entity_type == 'commerce_recurring') {
+    entity_property_uuid_to_id($entities, 'commerce_recurring', 'id');
+  }
+}

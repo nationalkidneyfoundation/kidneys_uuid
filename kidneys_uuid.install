@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * Implements hook_schema_alter().
+ */
+function kidneys_uuid_schema_alter(&$schema = array()) {
+  module_load_include('install', 'uuid');
+  $field = uuid_schema_field_definition();
+  $schema['commerce_recurring']['fields']['uuid'] = $field;
+}
+
+/**
+ * Implements hook_install().
+ */
+function kidneys_uuid_install() {
+  module_load_include('install', 'uuid');
+  $field = uuid_schema_field_definition();
+  db_add_field('commerce_recurring', 'uuid', $field);
+  db_add_index('commerce_recurring', 'uuid', array('uuid'));
+}
+
+/**
+ * Implements hook_enable().
+ */
+function kidneys_uuid_enable() {
+  uuid_sync_all();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function kidneys_uuid_uninstall() {
+  db_drop_field('commerce_recurring', 'uuid');
+  db_drop_index('commerce_recurring', 'uuid');
+}

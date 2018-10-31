@@ -1,0 +1,6 @@
+name = Kidneys UUID
+description = Add UUID support to commerce recurring entities, and maybe other entities.
+core = 7.x
+
+dependencies[] = uuid
+dependencies[] = commerce_recurring
